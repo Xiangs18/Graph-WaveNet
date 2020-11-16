@@ -1,6 +1,6 @@
 # Graph WaveNet for Deep Spatial-Temporal Graph Modeling
 
-This is the original pytorch implementation of Graph WaveNet in the following paper: 
+This is the original pytorch implementation of Graph WaveNet in the following paper:
 [Graph WaveNet for Deep Spatial-Temporal Graph Modeling, IJCAI 2019] (https://arxiv.org/abs/1906.00121).  A nice improvement over GraphWavenet is presented by Shleifer et al. [paper](https://arxiv.org/abs/1912.07390) [code](https://github.com/sshleifer/Graph-WaveNet).
 
 
@@ -18,7 +18,7 @@ This is the original pytorch implementation of Graph WaveNet in the following pa
 
 ### Step1: Download METR-LA and PEMS-BAY data from [Google Drive](https://drive.google.com/open?id=10FOTa6HXPqX8Pf5WRoRwcFnW9BrNZEIX) or [Baidu Yun](https://pan.baidu.com/s/14Yy9isAIZYdU__OYEQGa_g) links provided by [DCRNN](https://github.com/liyaguang/DCRNN).
 
-### Step2: Process raw data 
+### Step2: Process raw data
 
 ```
 # Create data directories
@@ -31,10 +31,16 @@ python generate_training_data.py --output_dir=data/METR-LA --traffic_df_filename
 python generate_training_data.py --output_dir=data/PEMS-BAY --traffic_df_filename=data/pems-bay.h5
 
 ```
+
+### Step3: Generate adj matrix
+
+```
+python -m scripts.gen_adj_mx  --sensor_ids_filename=data/sensor_graph/graph_sensor_ids.txt --normalized_k=0.1\
+    --output_pkl_filename=data/sensor_graph/adj_mx.pkl
+```
+
 ## Train Commands
 
 ```
 python train.py --gcn_bool --adjtype doubletransition --addaptadj  --randomadj
 ```
-
-
