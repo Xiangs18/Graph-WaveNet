@@ -7,6 +7,7 @@ import argparse
 import numpy as np
 import os
 import pandas as pd
+import sys
 
 
 def generate_graph_seq2seq_io_data(
@@ -83,7 +84,7 @@ def generate_train_val_test(args):
         _x, _y = locals()["x_" + cat], locals()["y_" + cat]
         print(cat, "x: ", _x.shape, "y:", _y.shape)
         np.savez_compressed(
-            os.path.join(args.output_dir, f"{cat}.npz"),
+            os.path.join(args.output_dir, cat + ".npz"),
             x=_x,
             y=_y,
             x_offsets=x_offsets.reshape(list(x_offsets.shape) + [1]),
@@ -102,8 +103,9 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
     if os.path.exists(args.output_dir):
-        reply = str(input(f'{args.output_dir} exists. Do you want to overwrite it? (y/n)')).lower().strip()
-        if reply[0] != 'y': exit
+        reply = str(input(f"{args.output_dir} exists. Do you want to overwrite it? (y/n)")).lower().strip()
+        if reply[0] != 'y':
+            sys.exit()
     else:
         os.makedirs(args.output_dir)
     generate_train_val_test(args)
